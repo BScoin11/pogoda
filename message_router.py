@@ -66,13 +66,15 @@ async def show_summary_ltc(message: Message, data: Dict[str, Any], positive: boo
         get_weatherapi = httpx.get(url_get_weatherapi, timeout=10)
         get_weatherapi_temp = get_weatherapi.json()["current"]["feelslike_c"]
         get_weatherapi_precip_mm = get_weatherapi.json()["current"]["precip_mm"]
+        get_weatherapi_wind_kph = get_weatherapi.json()["current"]["wind_kph"]
         get_weatherapi_location_name = get_weatherapi.json()["location"]["name"]
         TempAirEnv = (get_weatherapi_temp)
         LocationRu = (get_weatherapi_location_name)
         TempAirEnv = int(TempAirEnv)
         TempAirEnv = str(TempAirEnv)
         PrecipMM = str(get_weatherapi_precip_mm)
-        await message.answer(f'Температура {TempAirEnv} Осадки {PrecipMM}')
+        WindKph = str(get_weatherapi_wind_kph)
+        await message.answer(f'Температура {TempAirEnv} Осадки {PrecipMM} Скорость ветра {WindKph}')
         print(url_get_weatherapi)
     except KeyError:
         await message.answer("Такого города не существует")
